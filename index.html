@@ -1,0 +1,123 @@
+﻿<!DOCTYPE>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="images/icons/gameicon.ico">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TwoCar - Game</title>
+
+    <!-- Arquivo Raiz do Pixi Js -->
+    <script src="node_modules/pixi.js/dist/pixi.min.js"></script>
+
+    <!-- sound -->
+    <script src="js/pixi-sound.js"></script>
+
+</head>
+<body>
+
+
+    <script>
+    
+        // Cria a aplicação e add o canvas ao HTML
+        var app = new PIXI.Application({ width: 800, height: 600 });
+        document.body.appendChild(app.view);
+
+        // @car 
+        // Cria a variável carro, importa a imagem e seta uma posição
+        var car = PIXI.Sprite.fromImage('images/cars/yellow-car.png');
+        car.anchor.set(0.5); // centralizar
+        car.x = app.screen.width / 2; // centralizar
+        car.y = app.screen.height / 1.2; // centralizar e levar para o bottom
+
+        // create a texture from an image path
+        var texture = PIXI.Texture.fromImage('images/scenario/background.png');
+
+        // animation texture
+        var animationTexture = new PIXI.extras.TilingSprite(
+            texture,
+            app.screen.width,
+            app.screen.height
+        );
+
+        // create a text object that will be updated...
+        var countingText = new PIXI.Text('PONTOS: 0', {
+            fontWeight: 'bold',
+            fontSize: 20,
+            fontFamily: 'Arial',
+            fill: '#fff',
+            align: 'right',
+            stroke: '#000',
+            strokeThickness: 4
+        });
+
+        countingText.x = app.screen.width / 1.20;
+        countingText.y = 20;
+        countingText.anchor.x = 0;
+
+        // Play Sound
+        PIXI.sound.Sound.from({
+            url: 'sounds/loop3.mp3',
+            autoPlay: true,
+            preload: true,
+            loop: true
+        });
+
+        // Add Stage
+        app.stage.addChild(animationTexture, car, countingText);
+
+        var countTxt = 0;
+        app.ticker.add(function() {
+            animationTexture.tilePosition.y += 2;
+            countTxt += 0.025;
+            countingText.text = 'PONTOS: ' + Math.floor(countTxt);
+        });
+
+        var renderer = new PIXI.autoDetectRenderer(800,600);
+        document.body.appendChild(renderer.view);
+        var stage = new PIXI.Container();
+         
+        function animate(){
+          window.requestAnimationFrame(animate);
+          renderer.render(stage);
+          //add to your raf the keyboard update
+          PIXI.keyboardManager.update();
+        }
+        animate();
+    
+
+        PIXI.keyboardManager.on('down', function(key){
+          //If a key is down
+          console.log('Key down:' + key);
+        });
+         
+        PIXI.keyboardManager.on('pressed', function(key){
+          //If a key was pressed
+          console.log('Key pressed:' + key);
+        });
+         
+        PIXI.keyboardManager.on('released', function(key){
+          //If a key was released
+          console.log('Key released:' + key);
+        });
+
+        if(PIXI.keyboardManager.isPressed(PIXI.Key.CTRL)){
+              console.log('Control key is pressed');
+            }
+             
+            if(PIXI.keyboardManager.isDown(PIXI.Key.CTRL)){
+              console.log('Control key is down');
+            }
+             
+            if(PIXI.keyboardManager.isReleased(PIXI.Key.CTRL)){
+              console.log('Control key is released');
+            }
+            
+        // Add keyboard
+        app.stage.addChild(animationTexture, car, countingText, keyboardManager);
+    </script>
+
+
+</body>
+</html>

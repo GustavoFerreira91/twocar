@@ -1,0 +1,17 @@
+{
+  "name": "twocar",
+  "version": "1.0.0",
+  "description": "Joguinho de carro do Gustavo.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gustavo, Gabriel e Léo",
+  "license": "ISC",
+  "devDependencies": {
+    "http-server": "^0.11.1",
+    "pixi-keyboard": "^0.9.4",
+    "pixi-sound": "^2.1.0",
+    "pixi.js": "^4.5.1"
+  }
+}
